@@ -1,13 +1,9 @@
-#summary One-sentence summary of this page.
+#summary List the milestones to accomplish for the project
 
-= Introduction =
+=== Pending ===
 
-Add your content here.
+  * Extend user profile by allowing users to select course + term
+  * Review userinfuser logic.  Create own widgets
 
 
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+=== Completed ===
