@@ -116,3 +116,12 @@
 			.'SELECT loggedin FROM qa_users WHERE userid = #) A',
 			$userid, $userid), true);
 	}
+	
+	function mp_db_insert_userid_to_course($userid, $categoryid)
+	{
+		// register the user identified by $userid to course $courseid
+		// which is usually identified by $categoryid
+		
+		qa_db_query_sub( 'INSERT INTO mp_user_category_map values ( #, # )', $userid, $categoryid );
+		
+	}

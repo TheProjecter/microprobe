@@ -62,6 +62,8 @@
 
 	if (qa_clicked('doregister')) {
 		require_once QA_INCLUDE_DIR.'qa-app-users-edit.php';
+		require_once QA_INCLUDE_DIR.'mp-app-users.php';
+		require_once QA_INCLUDE_DIR.'mp-db-users.php';
 		
 		$inemail=qa_post_text('email');
 		$inpassword=qa_post_text('password');
@@ -77,8 +79,14 @@
 	
 		if (empty($errors)) { // register and redirect
 			$userid=qa_create_new_user($inemail, $inpassword, $inhandle);
-			qa_set_logged_in_user($userid, $inhandle);
 
+			// register user to course
+			$categoryid = 6;
+			mp_register_user($userid, $categoryid);
+
+			//qa_set_logged_in_user($userid, $inhandle, null, null);
+			qa_set_logged_in_user($userid, $inhandle, null, null, $categoryid);
+			
 			$topath=qa_get('to');
 			
 			if (isset($topath))
