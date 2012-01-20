@@ -79,6 +79,15 @@
 						),
 					);
 		}
+		else 
+		{
+			$navigation = array(
+					'default' => array(
+							'url' 	=> qa_path_html('mp-announcements-page'),
+							'label' => qa_lang_html('announcements/link_all'),
+					),
+				);
+		}
 				
 		return $navigation;
 	}
