@@ -78,6 +78,10 @@
 		$inemail=qa_post_text('email');
 		$inmessages=qa_post_text('messages');
 		$inavatar=qa_post_text('avatar');
+		$innotifyan=qa_post_text('notify_an');
+		$innotifyq=qa_post_text('notify_q');
+		$innotifya=qa_post_text('notify_a');
+		
 		
 		$errors=qa_handle_email_validate($inhandle, $inemail, $qa_login_userid);
 
@@ -97,6 +101,9 @@
 		qa_db_user_set_flag($qa_login_userid, QA_USER_FLAGS_NO_MESSAGES, !$inmessages);
 		qa_db_user_set_flag($qa_login_userid, QA_USER_FLAGS_SHOW_AVATAR, ($inavatar=='uploaded'));
 		qa_db_user_set_flag($qa_login_userid, QA_USER_FLAGS_SHOW_GRAVATAR, ($inavatar=='gravatar'));
+		qa_db_user_set_flag($qa_login_userid, QA_USER_FLAGS_NOTIFY_ANNOUNCEMENTS, !$innotifyan);
+		qa_db_user_set_flag($qa_login_userid, QA_USER_FLAGS_NOTIFY_QUESTIONS, !$innotifyq);
+		qa_db_user_set_flag($qa_login_userid, QA_USER_FLAGS_NOTIFY_ANSWERS, !$innotifya);
 
 		if (is_array(@$_FILES['file']) && $_FILES['file']['size']) {
 			require_once QA_INCLUDE_DIR.'qa-app-limits.php';
@@ -221,6 +228,29 @@
 					(($doconfirms && !$isconfirmed) ? qa_insert_login_links(qa_lang_html('users/email_please_confirm')) : null),
 			),
 			
+			'notify_annoucements' => array(
+				'type'  => 'checkbox',
+				'label' => qa_lang_html('users/notify_announcements_label'),
+				'tags' => 'NAME="notify_an"',
+				'value' => !($useraccount['flags'] & QA_USER_FLAGS_NOTIFY_ANNOUNCEMENTS),
+				'note'  => qa_lang_html('users/notify_annoucements_explanation'),
+			),
+			
+			'notify_questions' => array(
+				'type'  => 'checkbox',
+				'label' => qa_lang_html('users/notify_questions_label'),
+				'tags' => 'NAME="notify_q"',
+				'value' => !($useraccount['flags'] & QA_USER_FLAGS_NOTIFY_QUESTIONS),
+				'note'  => qa_lang_html('users/notify_questions_explanation'),
+			),			
+			
+			'notify_answers' => array(
+				'type'  => 'checkbox',
+				'label' => qa_lang_html('users/notify_answers_label'),
+				'tags' => 'NAME="notify_a"',
+				'value' => !($useraccount['flags'] & QA_USER_FLAGS_NOTIFY_ANSWERS),
+				'note'  => qa_lang_html('users/notify_answers_explanation'),
+			),				
 			'messages' => array(
 				'label' => qa_lang_html('users/private_messages'),
 				'tags' => 'NAME="messages"',
@@ -322,7 +352,6 @@
 		);
 	}
 	
-
 //	Change password form
 
 	$qa_content['form_password']=array(
