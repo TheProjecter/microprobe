@@ -127,6 +127,7 @@
 		require_once QA_INCLUDE_DIR.'qa-app-emails.php';
 		require_once QA_INCLUDE_DIR.'qa-db-selects.php';
 		require_once QA_INCLUDE_DIR.'mp-db-users.php';
+		require_once QA_INCLUDE_DIR.'mp-app-users.php';
 		
 		$postid=qa_db_post_create('Q', @$followanswer['postid'], $userid, isset($userid) ? null : $cookieid,
 			qa_remote_ip_address(), $title, $content, $format, $tagstring, qa_combine_notify_email($userid, $notify, $email), $categoryid);
@@ -165,18 +166,24 @@
 			));
 		
 		// notify all members of the category about the new post
-		if ( true )
+		// find list of members of the category
+		$recipients = mp_get_category_userids(mp_get_categoryid());
+			
+		// remove the current user from the list of recipients
+		unset($recipients[$userid]);
+			
+		// get details for current category
+		$currentcategory = mp_get_categoryinfo(mp_get_categoryid());
+			
+		foreach ($recipients as $recipient) 
 		{
-			// find list of members of the category
-			$recipients = mp_get_category_userids(mp_get_categoryid());
-			
-			// remove the current user from the list of recipients
-			unset($recipients[$userid]);
-			
-			// get details for current category
-			$currentcategory = mp_get_categoryinfo(mp_get_categoryid());
-			
-			foreach ($recipients as $recipient) 
+			// retrieve the user flags
+			$userflags = mp_get_user_flags($recipient['userid']);
+
+			// check user flags to determine whether user should be notified or not
+			// of the new answer post
+
+			if ( !($userflags & QA_USER_FLAGS_NOTIFY_QUESTIONS) )
 			{
 				// for each member, send notification
 				qa_send_notification($recipient['userid'], null, null, qa_lang('emails/q_posted_with_category_subject'), qa_lang('emails/q_posted_body'), array(
@@ -348,31 +355,38 @@
 			));
 		}
 		
-				// notify all members of the category about the new post
-		if ( true )
-		{
-			require_once QA_INCLUDE_DIR.'qa-app-emails.php';
-			require_once QA_INCLUDE_DIR.'mp-db-users.php';
+		// notify all members of the category about the new post
+		require_once QA_INCLUDE_DIR.'qa-app-emails.php';
+		require_once QA_INCLUDE_DIR.'mp-db-users.php';
+		require_once QA_INCLUDE_DIR.'mp-app-users.php';
 
-			// find list of members of the category
-			$recipients = mp_get_category_userids(mp_get_categoryid());
+		// find list of members of the category
+		$recipients = mp_get_category_userids(mp_get_categoryid());
 			
-			// remove the current user from the list of recipients
-			unset($recipients[$userid]);
+		// remove the current user from the list of recipients
+		unset($recipients[$userid]);
 			
-			// get details for current category
-			$currentcategory = mp_get_categoryinfo(mp_get_categoryid());
+		// get details for current category
+		$currentcategory = mp_get_categoryinfo(mp_get_categoryid());
 			
-			foreach ($recipients as $recipient) 
+		foreach ($recipients as $recipient)
+		{
+			// retrieve the user flags
+			$userflags = mp_get_user_flags($recipient['userid']);
+
+			// check user flags to determine whether user should be notified or not
+			// of the new answer post
+
+			if ( !($userflags & QA_USER_FLAGS_NOTIFY_ANSWERS) )
 			{
 				// for each member, send notification
 				qa_send_notification($recipient['userid'], null, null, qa_lang('emails/q_answered_with_category_subject'), qa_lang('emails/q_answered_with_category_body'), array(
-						'^a_handle' => isset($handle) ? $handle : qa_lang('main/anonymous'),
-						'^q_title' => $question['title'], // don't censor title or content since we want the admin to see bad words
-						'^a_content' => $text,
-						'^url' => qa_path(qa_q_request($question['postid'], $sendtitle), null, qa_opt('site_url'), null, qa_anchor('A', $postid)),
-						'^category_title' => $currentcategory['title'],
-					));
+							'^a_handle' => isset($handle) ? $handle : qa_lang('main/anonymous'),
+							'^q_title' => $question['title'], // don't censor title or content since we want the admin to see bad words
+							'^a_content' => $text,
+							'^url' => qa_path(qa_q_request($question['postid'], $sendtitle), null, qa_opt('site_url'), null, qa_anchor('A', $postid)),
+							'^category_title' => $currentcategory['title'].$userflags,
+				));
 			}
 		}
 		

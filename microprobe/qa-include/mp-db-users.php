@@ -125,3 +125,13 @@
 		qa_db_query_sub( 'INSERT INTO mp_user_category_map values ( #, # )', $userid, $categoryid );
 		
 	}
+	
+	function mp_db_user_get_flags($userid)
+	{
+		/*
+		 * Return the value of field $flags for user $userid
+		 */
+		return qa_db_read_one_value(
+				qa_db_query_sub('SELECT flags FROM ^users WHERE userid = #', $userid), 
+				false);
+	}

@@ -9,6 +9,7 @@
 	 
 		require_once QA_INCLUDE_DIR.'qa-db-post-create.php';
 		require_once QA_INCLUDE_DIR.'qa-app-emails.php';
+		require_once QA_INCLUDE_DIR.'mp-app-users.php';
 		
 		// persist data to database
 		$postid = qa_db_post_create('AN', null, $userid, $cookieid, qa_remote_ip_address(), $title, $content, $format, null, $notify, $categoryid);
@@ -25,12 +26,21 @@
 			
 			foreach ($recipients as $recipient )
 			{
-				qa_send_notification($recipient['userid'], null, null, qa_lang('emails/an_posted_subject'), qa_lang('emails/an_posted_body'), array(
-					'^an_handle' => $handle,
-					'^category_title' => $category['title'],
-					'^an_title' => $title,
-					'^an_url' => qa_path('mp-announcements-page', null, qa_opt('site_url'), null, null),
-					));
+				// retrieve the user flags
+				$userflags = mp_get_user_flags($recipient['userid']);
+
+				// check user flags to determine whether user should be notified or not
+				// of the new answer post
+	
+				if ( !($userflags & QA_USER_FLAGS_NOTIFY_ANNOUNCEMENTS) )
+				{				
+					qa_send_notification($recipient['userid'], null, null, qa_lang('emails/an_posted_subject'), qa_lang('emails/an_posted_body'), array(
+						'^an_handle' => $handle,
+						'^category_title' => $category['title'],
+						'^an_title' => $title,
+						'^an_url' => qa_path('mp-announcements-page', null, qa_opt('site_url'), null, null),
+						));
+				}
 			}
 		}
 		

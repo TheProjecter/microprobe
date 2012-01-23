@@ -111,6 +111,12 @@
 		'view_account_page' => 'Return to ^1your account^2 page.',
 		'website' => 'Website',
 		'x_ago_from_y' => '^1 ago from ^2',
+		'notify_announcements_label' => 'Notify annoucements:',
+		'notify_questions_label' => 'Notify questions:',
+		'notify_answers_label' => 'Notify answers:',
+		'notify_annoucements_explanation' => 'Receive email notifications on new annoucements',
+		'notify_questions_explanation' => 'Receive email notifications when questions are posted',
+		'notify_answers_explanation' => 'Receive email notifications when answers are posted',
 	);
 	
 
