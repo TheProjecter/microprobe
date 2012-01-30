@@ -410,3 +410,36 @@ h2 {font-size:16px; padding-top:12px; clear:both;}
 .mp-widget-profile-list-title { width:150px; padding-right:5px}
 .mp-widget-profile-list-good { background:url(tick_good.png) center left no-repeat; padding:0 0 0 16px; white-space:nowrap }
 .mp-widget-profile-list-bad { background:url(tick_bad.png) center center no-repeat; padding:0 0 0 16px; white-space:nowrap }
+
+/* Classroom view */
+
+.mp-classroom-teacher {
+	height: 100px; 
+	width: 178px;
+	background: url(teacher_icon.png);
+	background-repeat: no-repeat;
+	background-position:center;		
+	}
+.mp-classroom-users {
+	margin:0px;
+	}
+.mp-classroom-user {
+	height: 100px; 
+	width: 178px;
+	float: left;
+	}
+	
+	.mp-classroom-user .mp-classroom-avatar {
+		background: url(student_icon.png);
+		height: 64px;
+		width:auto;
+		border-color: red;
+		border: 1px;
+		background-repeat: no-repeat;
+		background-position:center;
+		}
+	.mp-classroom-user .mp-classroom-useremail {
+		text-align: center;
+		padding: 5px;
+	}
+	

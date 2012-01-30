@@ -39,6 +39,7 @@
 				//unset($this->content['navigation']['main']['categories']);
 				unset($this->content['navigation']['main']['ask']);
 				unset($this->content['navigation']['main']['custom-9']);
+				unset($this->content['navigation']['main']['custom-10']);
 				unset($this->content['navigation']['main']['custom-7'][0]);
 			}
 			$this->nav('main');
