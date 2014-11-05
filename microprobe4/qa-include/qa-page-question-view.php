@@ -30,6 +30,10 @@
 	}
 
 
+    // report that we entered this page
+    qa_report_event('page_enter', qa_get_logged_in_userid(), qa_get_logged_in_handle(), qa_cookie_get(), array('params'=>$_SERVER['QUERY_STRING'],'path'=>$_SERVER['SCRIPT_NAME']));
+    
+    
 	function qa_page_q_load_as($question, $childposts)
 /*
 	Given a $question and its $childposts from the database, return a list of that question's answers
