@@ -29,6 +29,8 @@
 		exit;
 	}
 
+    // report that we entered this page
+    qa_report_event('page_enter', qa_get_logged_in_userid(), qa_get_logged_in_handle(), qa_cookie_get(), array('params'=>$_SERVER['QUERY_STRING'],'path'=>$_SERVER['SCRIPT_NAME']));
 
 //	Check we're not using Q2A's single-sign on integration and that we're not logged in
 	

@@ -28,6 +28,10 @@
 		header('Location: ../');
 		exit;
 	}
+	
+	// report that we entered this page
+    qa_report_event('page_enter', qa_get_logged_in_userid(), qa_get_logged_in_handle(), qa_cookie_get(), array('params'=>$_SERVER['QUERY_STRING'],'path'=>$_SERVER['SCRIPT_NAME']));
+	
 
 	require_once QA_INCLUDE_DIR.'qa-app-captcha.php';
 	require_once QA_INCLUDE_DIR.'qa-db-selects.php';

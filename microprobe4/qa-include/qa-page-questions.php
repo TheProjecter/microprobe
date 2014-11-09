@@ -29,6 +29,9 @@
 		exit;
 	}
 
+    // report that we entered this page
+    qa_report_event('page_enter', qa_get_logged_in_userid(), qa_get_logged_in_handle(), qa_cookie_get(), array('params'=>$_SERVER['QUERY_STRING'],'path'=>$_SERVER['SCRIPT_NAME']));
+
 	require_once QA_INCLUDE_DIR.'qa-db-selects.php';
 	require_once QA_INCLUDE_DIR.'qa-app-format.php';
 	require_once QA_INCLUDE_DIR.'qa-app-q-list.php';
@@ -39,7 +42,6 @@
 	$sort=($countslugs && !QA_ALLOW_UNINDEXED_QUERIES) ? null : qa_get('sort');
 	$start=qa_get_start();
 	$userid=qa_get_logged_in_userid();
-
 
 //	Get list of questions, plus category information
 

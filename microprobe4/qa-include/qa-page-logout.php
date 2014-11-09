@@ -29,6 +29,8 @@
 		exit;
 	}
 
+    // report that we entered this page
+    qa_report_event('page_enter', qa_get_logged_in_userid(), qa_get_logged_in_handle(), qa_cookie_get(), array('params'=>$_SERVER['QUERY_STRING'],'path'=>$_SERVER['SCRIPT_NAME']));
 
 	if (QA_FINAL_EXTERNAL_USERS)
 		qa_fatal_error('User logout is handled by external code');
