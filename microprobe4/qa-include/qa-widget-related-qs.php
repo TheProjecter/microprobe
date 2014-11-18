@@ -74,7 +74,7 @@
 				$themeobject->output('<ul class="qa-related-q-list">');
 
 				foreach ($questions as $question)
-					$themeobject->output('<li class="qa-related-q-item"><a href="'.qa_q_path_html($question['postid'], $question['title']).'">'.qa_html($question['title']).'</a></li>');
+					$themeobject->output('<li class="qa-related-q-item"><a onClick="return qa_report_event(\'open_related\', {});" href="'.qa_q_path_html($question['postid'], $question['title']).'">'.qa_html($question['title']).'</a></li>');
 
 				$themeobject->output(
 					'</ul>',

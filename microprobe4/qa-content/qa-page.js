@@ -175,3 +175,22 @@ function qa_ajax_error()
 {
 	alert('Unexpected response from server - please try again or switch off Javascript.');
 }
+
+/**
+ * A function to report an event for logging
+ * @param event
+ * @param params
+ */
+function qa_report_event(event, _params) {
+	var params = {
+			"params"	: _params,
+			"logevent" 	: event
+			};
+	
+	// post an event recording
+	qa_ajax_post("report_event", params, function(resp) {
+		console.log("I returned " + event + ", resp=" + JSON.stringify(resp));		
+	});
+	
+	return true;
+}
