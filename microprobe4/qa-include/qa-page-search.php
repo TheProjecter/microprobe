@@ -129,7 +129,7 @@
 			if (isset($qdefaults['blockwordspreg']))
 				$result['title']=qa_block_words_replace($result['title'], $qdefaults['blockwordspreg']);
 				
-			$fields['title']=qa_html($result['title']);
+			$fields['title']=qa_html($result['title']."  [QuestionId=".$result['question_postid']."]");
 			$fields['url']=qa_html($result['url']);
 			
 			$qa_content['q_list']['qs'][]=$fields;

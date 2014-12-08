@@ -296,7 +296,7 @@
 				if (isset($options['blockwordspreg']))
 					$post['title']=qa_block_words_replace($post['title'], $options['blockwordspreg']);
 				
-				$fields['title']=qa_html($post['title']);
+				$fields['title']=qa_html($post['title']."  [QuestionId=".$post['postid']."]");
 				if ($microformats)
 					$fields['title']='<span class="entry-title">'.$fields['title'].'</span>';
 					
