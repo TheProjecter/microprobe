@@ -215,7 +215,7 @@
 	} else { // ...in view mode
 		$qa_content['q_view']=qa_page_q_question_view($question, $parentquestion, $closepost, $usershtml, $formrequested);
 
-		$qa_content['title']=$qa_content['q_view']['title']."<br/>Question ID: ".$question['postid'];
+		$qa_content['title']=$qa_content['q_view']['title']."<br/>Discussion ID: ".$question['postid'];
 
 		$qa_content['description']=qa_html(qa_shorten_string_line(qa_viewer_text($question['content'], $question['format']), 150));
 		
